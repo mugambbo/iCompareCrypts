@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">iCompare Crypts</string>
+    <string name="action_about">About</string>
+    <string name="title_activity_conversion">Currency Conversion</string>
+    <string name="title_activity_about">About</string>
+    <string name="developed_by">Developed by:</string>
+    <string name="abdulmajid_i">Abdulmajid, I.</string>
+    <string name="software_engineer">Software Engineer</string>
+    <string name="follow_me_mugambbo">Follow me: @mugambbo</string>
+    <string name="btc_to_ngn">BTC to NGN</string>
+    <string name="eg_1000">e.g. 1000</string>
+
+</resources>
