@@ -96,30 +96,6 @@ public class CurrencyListAdapter extends BaseAdapter {
         holder.mFromFullname.setText(currentItem.getFromCurrencyFullname());
         holder.mToFullname.setText(currentItem.getToCurrencyFullname());
 
-//            VolleyClient.getInstance(mContext).getImageLoader().get(currentItem.getFromImageURL(), new ImageLoader.ImageListener() {
-//                @Override
-//                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-//                    holder.mFromCurrencyImage.setImageBitmap(response.getBitmap());
-//                }
-//
-//                @Override
-//                public void onErrorResponse(VolleyError error) {
-//                    holder.mFromCurrencyImage.setImageResource(R.mipmap.ic_launcher);
-//                }
-//            });
-//
-//            VolleyClient.getInstance(mContext).getImageLoader().get(currentItem.getToImageURL(), new ImageLoader.ImageListener() {
-//                @Override
-//                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-//                    holder.mToCurrencyImage.setImageBitmap(response.getBitmap());
-//                }
-//
-//                @Override
-//                public void onErrorResponse(VolleyError error) {
-//                    holder.mFromCurrencyImage.setImageResource(R.mipmap.ic_launcher);
-//                }
-//            });
-
         Glide.with(mContext).load(currentItem.getFromImageURL()).into(holder.mFromCurrencyImage);
         Glide.with(mContext).load(currentItem.getToImageURL()).into(holder.mToCurrencyImage);
 

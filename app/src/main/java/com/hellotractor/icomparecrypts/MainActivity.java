@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
         final Spinner mToSpinner = (Spinner) mView.findViewById(R.id.to_spinner);
         final Spinner mFromSpinner = (Spinner) mView.findViewById(R.id.from_spinner);
 
+        toWorldCurrency = true;
+
         if (fromCurrencies.isEmpty()) {
             for (CryptoCurrencySymbols cryptoCurrencySymbols : CryptoCurrencySymbols.values()) {
                 fromCurrencies.add(cryptoCurrencySymbols.fullName());
@@ -238,8 +240,8 @@ public class MainActivity extends AppCompatActivity {
 
                 } else {
                     Toast.makeText(MainActivity.this, "Unable to fetch exchange rates. Check your internet connection.", Toast.LENGTH_SHORT).show();
+                    toggleProgressBar(false);
                 }
-                toggleProgressBar(false);
                 if (!currencyExchangeList.isEmpty()){
                     mNoExchangeRatesTV.setVisibility(View.GONE);
                 } else {
@@ -249,7 +251,9 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                toggleProgressBar(false);
+                fab.setEnabled(true);
+                Toast.makeText(MainActivity.this, "Unable to fetch exchange rates. Check your internet connection.", Toast.LENGTH_SHORT).show();
             }
         });
         request.setSequence(0);
