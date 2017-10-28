@@ -14,6 +14,15 @@ public class ExchangeRateItem {
     String toImageURL;
     double fromAmount;
     double toAmount;
+    String updated;
+
+    public String getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(String updated) {
+        this.updated = updated;
+    }
 
     public int getId() {
         return id;

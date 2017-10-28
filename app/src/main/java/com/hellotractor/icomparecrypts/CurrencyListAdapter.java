@@ -6,6 +6,7 @@ package com.hellotractor.icomparecrypts;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,12 @@ import java.util.ArrayList;
 
 //import com.bumptech.glide.Glide;
 //import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.bumptech.glide.Glide;
 import com.hellotractor.icomparecrypts.model.ExchangeRateItem;
+import com.hellotractor.icomparecrypts.network.VolleyClient;
+import com.hellotractor.icomparecrypts.util.DateTimeUtil;
 import com.hellotractor.icomparecrypts.util.Fonts;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -54,7 +59,7 @@ public class CurrencyListAdapter extends BaseAdapter {
     // 5
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        final ViewHolder holder;
         LayoutInflater mInflater = (LayoutInflater)mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.currency_list_item, null);
@@ -67,6 +72,7 @@ public class CurrencyListAdapter extends BaseAdapter {
             holder.mToText = (TextView) convertView.findViewById(R.id.to_text);
             holder.mFromFullname = (TextView) convertView.findViewById(R.id.from_fullname);
             holder.mToFullname = (TextView) convertView.findViewById(R.id.to_fullname);
+            holder.mUpdated = (TextView) convertView.findViewById(R.id.updated);
 
             holder.mToCurrencyAmount.setTypeface(Fonts.titleFont(mContext));
             holder.mFromCurrencyAmount.setTypeface(Fonts.titleFont(mContext));
@@ -74,6 +80,7 @@ public class CurrencyListAdapter extends BaseAdapter {
             holder.mFromText.setTypeface(Fonts.subtitleFont(mContext));
             holder.mFromFullname.setTypeface(Fonts.subtitleFont(mContext));
             holder.mToFullname.setTypeface(Fonts.subtitleFont(mContext));
+            holder.mUpdated.setTypeface(Fonts.subtitleFont(mContext));
 
             convertView.setTag(holder);
         } else {
@@ -88,8 +95,35 @@ public class CurrencyListAdapter extends BaseAdapter {
         holder.mToCurrencyAmount.setText(numberFormat.format(currentItem.getToAmount())+" "+currentItem.getToCurrencySymbol());
         holder.mFromFullname.setText(currentItem.getFromCurrencyFullname());
         holder.mToFullname.setText(currentItem.getToCurrencyFullname());
+
+//            VolleyClient.getInstance(mContext).getImageLoader().get(currentItem.getFromImageURL(), new ImageLoader.ImageListener() {
+//                @Override
+//                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+//                    holder.mFromCurrencyImage.setImageBitmap(response.getBitmap());
+//                }
+//
+//                @Override
+//                public void onErrorResponse(VolleyError error) {
+//                    holder.mFromCurrencyImage.setImageResource(R.mipmap.ic_launcher);
+//                }
+//            });
+//
+//            VolleyClient.getInstance(mContext).getImageLoader().get(currentItem.getToImageURL(), new ImageLoader.ImageListener() {
+//                @Override
+//                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+//                    holder.mToCurrencyImage.setImageBitmap(response.getBitmap());
+//                }
+//
+//                @Override
+//                public void onErrorResponse(VolleyError error) {
+//                    holder.mFromCurrencyImage.setImageResource(R.mipmap.ic_launcher);
+//                }
+//            });
+
         Glide.with(mContext).load(currentItem.getFromImageURL()).into(holder.mFromCurrencyImage);
         Glide.with(mContext).load(currentItem.getToImageURL()).into(holder.mToCurrencyImage);
+
+        holder.mUpdated.setText(DateTimeUtil.getTimeAgo(currentItem.getUpdated(), DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE, mContext));
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,5 +151,6 @@ public class CurrencyListAdapter extends BaseAdapter {
         TextView mFromText;
         TextView mFromFullname;
         TextView mToFullname;
+        TextView mUpdated;
     }
 }
